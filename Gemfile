@@ -37,3 +37,5 @@ gem 'jquery-rails'
 gem 'twitter-bootstrap-rails'
 gem 'kaminari'
 gem 'hpricot'
+
+gem 'fastercsv'
