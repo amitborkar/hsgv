@@ -10,12 +10,12 @@
   </li>
 </ul>
 
-<% unless params[:source] && ["ustream", "all"].include?(params[:source]) %>
-  <%= form_tag( {:action => 'import'}, {:multipart => true }) do %>
-    <%= file_field_tag :import_file, :class => 'input-file' %>
-    <%= submit_tag 'Import &darr;'.html_safe, :class => 'btn' %>
-  <% end %>
-<% end %>
+<%# unless params[:source] && ["ustream", "all"].include?(params[:source]) %>
+  <%#= form_tag( {:action => 'import'}, {:multipart => true }) do %>
+    <%#= file_field_tag :import_file, :class => 'input-file' %>
+    <%#= submit_tag 'Import &darr;'.html_safe, :class => 'btn' %>
+  <%# end %>
+<%# end %>
 
 <% unless params[:source] && params[:source] == "all" %>
   <table class="table-striped table table-bordered">
