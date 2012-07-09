@@ -1,6 +1,7 @@
 require 'csv'
 require 'net/http'
 require 'hpricot'
+require 'faster_csv'
 
 class Event < ActiveRecord::Base  
   FROM_FILE, FROM_USTREAM = 0, 1
