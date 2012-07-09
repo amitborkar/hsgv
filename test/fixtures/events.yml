@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: MyString
+  committee_id: 1
+  start_date: 2012-07-07 08:32:29
+
+two:
+  title: MyString
+  committee_id: 1
+  start_date: 2012-07-07 08:32:29

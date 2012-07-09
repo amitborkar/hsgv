@@ -1,0 +1,74 @@
+<ul class="nav nav-tabs">
+  <li <%= params[:source] == "file" ? "class='active'" : "" %>>
+    <%= link_to "On file", :source => "file"%>
+  </li>
+  <li <%= params[:source] == "ustream" ? "class='active'" : "" %>>
+    <%= link_to "On Ustream", :source => "ustream" %>
+  </li>
+  <li <%= params[:source] == "all" ? "class='active'" : "" %>>
+    <%= link_to "Aggregated", :source => "all" %>
+  </li>
+</ul>
+
+<% unless params[:source] && ["ustream", "all"].include?(params[:source]) %>
+  <%= form_tag( {:action => 'import'}, {:multipart => true }) do %>
+    <%= file_field_tag :import_file, :class => 'input-file' %>
+    <%= submit_tag 'Import &darr;'.html_safe, :class => 'btn' %>
+  <% end %>
+<% end %>
+
+<% unless params[:source] && params[:source] == "all" %>
+  <table class="table-striped table table-bordered">
+    <thead>
+      <tr>
+        <th style='width:10%'>Committee</th>
+        <th style='width:60%'>Title</th>
+        <th style='width:10%'>Start date</th>
+        <% if params[:source] && params[:source] == "ustream" %>
+          <th style='width:10%'>Archive Id</th>
+        <% end %>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @events.each do |event| %>
+        <tr>
+          <td style='width:10%'><%= event.committee_id %></td>
+          <td style='width:60%'><%= link_to event.title, event %></td>
+          <td style='width:10%'><%= event.start_date %></td>
+          <% if params[:source] && params[:source] == "ustream" %>        
+            <td style='width:10%'><%= event.ustream_archive_id %></td>
+          <% end %>
+          <td><%= link_to 'Edit', edit_event_path(event) %> | <%= link_to 'Destroy', event, :confirm => 'Are you sure?', :method => :delete %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<% if params[:source] && params[:source] == "all" %>
+<table class="table-striped table table-bordered">
+  <thead>
+    <tr>
+      <th style='width:10%'>Committee</th>
+      <th style='width:30%'>On File Ids</th>
+      <th style='width:30%'>UStream archive ids</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @events.each do |k, v| %>
+      <tr>
+        <td style='width:10%'><%= k %></td>
+        <td style='width:30%'><%= v.map(&:id).to_sentence %></td>
+        <td style='width:30%'>
+          <% v.each do |vv| %>
+            <% if vv.ustream_archive_id %>
+              <%= vv.ustream_archive_id %><br />
+            <% end %>
+          <% end %>
+        </td>        
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
